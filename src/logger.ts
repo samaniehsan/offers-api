@@ -13,7 +13,7 @@ const { File, Console } = transports;
 const logger = createLogger({
     level: 'info',
     format: format.json(),
-    defaultMeta: { service: 'user-service' },
+    defaultMeta: { service: 'offer-api' },
     transports: [
       //
       // - Write to all logs with level `info` and below to `combined.log` 
@@ -46,6 +46,23 @@ if (process.env.NODE_ENV === 'production') {
     });
     logger.add(errTransport);
     logger.add(infoTransport);
+    const errorStackFormat = format((info) => {
+        if (info.stack) {
+            // tslint:disable-next-line:no-console
+            console.log(info.stack);
+            return false;
+        }
+        return info;
+    });
+    const consoleTransport = new Console({
+        format: format.combine(
+            format.colorize(),
+            format.simple(),
+            errorStackFormat(),
+        ),
+    });
+    
+    logger.add(consoleTransport);
 
 } else {
 
