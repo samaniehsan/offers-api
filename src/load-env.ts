@@ -1,12 +1,16 @@
 import dotenv from 'dotenv';
 import commandLineArgs from 'command-line-args';
 
+let defaultEnv = process.env.NODE_ENV;
+if(!defaultEnv) {
+    defaultEnv = 'production'
+}
 // Setup command line options
 const options = commandLineArgs([
     {
         name: 'env',
         alias: 'e',
-        defaultValue: 'production',
+        defaultValue: defaultEnv,
         type: String,
     },
 ]);
