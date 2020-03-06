@@ -6,6 +6,8 @@ try {
     // Remove current build
     fs.removeSync('./dist/');
     // Copy front-end files
+    fs.copySync('./package.json', './dist/package.json');
+    fs.copySync('./deployment/app.yaml', './dist/app.yaml');
     fs.copySync('./env', './dist/env');
     fs.copySync('./src/views', './dist/views');
     // Transpile the typescript files
